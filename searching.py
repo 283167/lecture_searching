@@ -33,10 +33,24 @@ def read_data(file_name, field):
             return None
 
 
-def main(file_name, field):
+def linear_search(data, number):
+    count_number = 0
+    indexes = []
+    i = 0
+    for data[i] in data:
+        if data[i] == number:
+            count_number += 1
+            indexes.append(i)
+        i += 1
+    result = {"positions": indexes, "count": count_number}
+    return result
+
+
+def main(file_name, field, number):
     data = read_data(file_name, field)
-    return data
+    search = linear_search(data, number)
+    return search
 
 
 if __name__ == "__main__":
-    print(main("sequential.json", "ordered_numbers"))
+    print(main("sequential.json", "ordered_numbers", 8))
