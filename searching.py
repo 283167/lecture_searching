@@ -1,5 +1,9 @@
 from pathlib import Path
 import json
+import generators
+import time
+
+from generators import ordered_sequence
 
 
 def read_data(file_name, field):
@@ -64,12 +68,30 @@ def binary_search(data, number):
         return None
 
 
-def main(file_name, field, number):
+def main(file_name, field, number, search_type):
     data = read_data(file_name, field)
-    #search = linear_search(data, number)
-    search = binary_search(data, number)
+    if search_type == "linear":
+        search = linear_search(data, number)
+    elif search_type == "binary":
+        search = binary_search(data, number)
     return search
 
 
 if __name__ == "__main__":
-    print(main("sequential.json", "ordered_numbers", 3))
+    sizes = [100, 500, 1000, 5000, 10000]
+    linear_times = []
+    binary_times = []
+    for size in sizes:
+        data = ordered_sequence(size)
+        start = time.perf_counter()
+        linear_search(data, 8)
+        end = time.perf_counter()
+        duration = end - start
+        linear_times.append(duration)
+        start = time.perf_counter()
+        binary_search(data, 8)
+        end = time.perf_counter()
+        duration = end - start
+        binary_times.append(duration)
+    print(linear_times, binary_times)
+
