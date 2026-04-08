@@ -22,10 +22,21 @@ def read_data(file_name, field):
     
     file_path = cwd_path / file_name
 
+    with open(file_path, "r") as file:
+        data = json.load(file)
+        result = data[field]
+        if field == "dna_sequence":
+            return result
+        elif type(result[0]) is int:
+            return result
+        else:
+            return None
 
-def main():
-    pass
+
+def main(file_name, field):
+    data = read_data(file_name, field)
+    return data
 
 
 if __name__ == "__main__":
-    main()
+    print(main("sequential.json", "ordered_numbers"))
