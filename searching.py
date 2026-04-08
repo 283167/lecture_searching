@@ -46,11 +46,30 @@ def linear_search(data, number):
     return result
 
 
+def binary_search(data, number):
+    start = 0
+    end = len(data)
+    number_found = False
+    while not number_found:
+        mid = int((end + start) / 2)
+        if data[mid] > number:
+            end = mid
+        elif data[mid] == number:
+            return mid
+        elif (start+1) == end:
+            break
+        else:
+            start = mid
+    if number_found == False:
+        return None
+
+
 def main(file_name, field, number):
     data = read_data(file_name, field)
-    search = linear_search(data, number)
+    #search = linear_search(data, number)
+    search = binary_search(data, number)
     return search
 
 
 if __name__ == "__main__":
-    print(main("sequential.json", "ordered_numbers", 8))
+    print(main("sequential.json", "ordered_numbers", 3))
